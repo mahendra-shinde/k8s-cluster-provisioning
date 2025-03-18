@@ -193,9 +193,9 @@ sudo systemctl restart containerd
 1. Add kubernetes package repository 
 
 ```bash
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt update -y
 
@@ -212,7 +212,8 @@ sudo apt-mark hold kubelet kubeadm kubectl
 3. Verify if all packages are installed.
 
 ```bash
-kubeadm --version
+kubeadm version -o short
 kubelet --version
-kubectl --version
+kubectl version --client
 ```
+
