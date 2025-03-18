@@ -79,7 +79,7 @@ vagrant ssh kubemaster
 
 > Keep this Powershell Window Open for Future use
 
-7. To Access `Nodd-1` node we would use this command:
+7. To Access `Node1` node we would use this command:
 
 ```
 cd \k8s-cluster
@@ -124,3 +124,12 @@ echo "Reload kernel parameters and apply the changes"
 sudo sysctl --system
 ```
 
+3. Install the packages
+
+```bash
+sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update -y
+sudo apt install -y containerd.io
+```
