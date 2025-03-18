@@ -103,7 +103,7 @@ vagrant ssh node2
 
 1. SSH into one of the machines (Step 6,7 and 8)
 
-2. Use following commands 
+2. Use following commands to set linux kernel modules (container networking) for `libcontainerd`
 
 ```bash
 sudo tee /etc/modules-load.d/containerd.conf <<EOF
@@ -112,11 +112,15 @@ br_netfilter
 EOF
 ```
 
+3. Use following command to reload kernel modules configured just now.
+
 ```bash
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
 ```
+
+4. Set kernel parameters for kubernetes packages (used later)
 
 ```bash
 sudo tee /etc/sysctl.d/kubernetes.conf <<EOD
@@ -127,22 +131,43 @@ EOD
 
 ```
 
+5. Apply all the changes to kernel parameters before installing packagses.
+
 ```bash
 sudo sysctl --system
 
 ```
 
-3. Install the packages
+6. Install the pre-requisite packages for installing third party packages (containerd and kubernetes).
 
 ```bash
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+```
 
+7. Install the GPG key for `docker` repository.
+
+```bash
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+```
 
+8. Add the `docker` repository. (press ENTER when prompted)
+
+```bash
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+```
 
-sudo apt update -y
+9. Install the `containerd` package.
 
-sudo apt install -y containerd.io
+```bash
+sudo apt update -y && sudo apt install -y containerd.io
 
+```
+
+10. Using a new Powershell, test if all VMs have `containerd` installed.
+
+```bash
+cd \k8s-cluster
+vagrant ssh node1 -c "apt list --installed | grep containerd"
+vagrant ssh node2 -c "apt list --installed | grep containerd"
+vagrant ssh node3 -c "apt list --installed | grep containerd"
 ```
