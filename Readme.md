@@ -160,7 +160,6 @@ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubun
 
 ```bash
 sudo apt update -y && sudo apt install -y containerd.io
-
 ```
 
 10. Using a new Powershell, test if all VMs have `containerd` installed.
@@ -171,3 +170,21 @@ vagrant ssh node1 -c "apt list --installed | grep containerd"
 vagrant ssh node2 -c "apt list --installed | grep containerd"
 vagrant ssh node3 -c "apt list --installed | grep containerd"
 ```
+
+11. Configure `containerd` to start using systemd cgroup driver (Required for latest kubernetes packages )
+
+```bash
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+
+sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+```
+
+12. Restart and Enable `containerd` service (Using SystemD)
+
+```bash
+sudo systemctl enable containerd
+
+sudo systemctl restart containerd
+```
+
