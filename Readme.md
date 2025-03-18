@@ -188,3 +188,31 @@ sudo systemctl enable containerd
 sudo systemctl restart containerd
 ```
 
+## Install Kubernetes packages using Ubuntu APT package manager
+
+1. Add kubernetes package repository 
+
+```bash
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt update -y
+
+```
+
+2. Install the packages and make sure OS (Ubuntu) wont update them automatically.
+
+```bash
+sudo apt install -y kubelet kubeadm kubectl
+
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+
+3. Verify if all packages are installed.
+
+```bash
+kubeadm --version
+kubelet --version
+kubectl --version
+```
