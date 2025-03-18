@@ -110,16 +110,24 @@ sudo tee /etc/modules-load.d/containerd.conf <<EOF
 overlay
 br_netfilter
 EOF
+```
+
+```bash
 echo "Reload the linux kernel modules"
 sudo modprobe overlay
 sudo modprobe br_netfilter
+```
+
+```bash
 echo "set kernel parameters for kubernetes"
 sudo tee /etc/sysctl.d/kubernetes.conf <<EOD
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOD
+```
 
+```bash
 echo "Reload kernel parameters and apply the changes"
 sudo sysctl --system
 ```
