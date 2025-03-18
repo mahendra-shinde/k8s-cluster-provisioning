@@ -113,31 +113,36 @@ EOF
 ```
 
 ```bash
-echo "Reload the linux kernel modules"
 sudo modprobe overlay
 sudo modprobe br_netfilter
+
 ```
 
 ```bash
-echo "set kernel parameters for kubernetes"
 sudo tee /etc/sysctl.d/kubernetes.conf <<EOD
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOD
+
 ```
 
 ```bash
-echo "Reload kernel parameters and apply the changes"
 sudo sysctl --system
+
 ```
 
 3. Install the packages
 
 ```bash
 sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
 sudo apt update -y
+
 sudo apt install -y containerd.io
+
 ```
