@@ -222,3 +222,22 @@ kubectl version --client
 ```bash
 sudo kubeadm config images pull 
 ```
+
+5. Set the Node IP address for kubelet on `kubemaster` to `192.168.33.12`
+
+```
+sudo nano /etc/default/kubelet
+```
+
+6. Add following line and then use command `Ctrl+X` then `Y`followed by `Enter` to save and close
+
+```
+KUBELET_EXTRA_ARGS="--node-ip=192.168.33.12" 
+```
+
+7. Enable kubelet service and restart it.
+
+```
+sudo systemctl enable kubelet
+sudo systemctl restart kubelet
+```
