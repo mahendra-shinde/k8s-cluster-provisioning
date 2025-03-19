@@ -241,3 +241,10 @@ KUBELET_EXTRA_ARGS="--node-ip=192.168.33.12"
 sudo systemctl enable kubelet
 sudo systemctl restart kubelet
 ```
+
+8.  To start the cluster, use `kubeadm init`
+
+```bash
+sudo kubeadm init --apiserver-advertise-address 192.168.33.12 
+```
+
