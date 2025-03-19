@@ -216,4 +216,3 @@ kubeadm version -o short
 kubelet --version
 kubectl version --client
 ```
-
