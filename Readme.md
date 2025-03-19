@@ -216,3 +216,9 @@ kubeadm version -o short
 kubelet --version
 kubectl version --client
 ```
+
+4. Pre-Fetch all the control plane component images.
+
+```bash
+sudo kubeadm config images pull 
+```
